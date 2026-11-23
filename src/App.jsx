@@ -46,33 +46,46 @@ async function concluir(id) {
 }`
 }
 
+const ICON = {
+  github: 'M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22',
+  mail: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM22 6l-10 7L2 6',
+  chat: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z',
+  sun: 'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42',
+  moon: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z',
+  layers: 'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+  list: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
+  phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM12 18h.01',
+  branch: 'M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9',
+}
+const Icon = ({ name }) => <svg className="icon" viewBox="0 0 24 24" aria-hidden="true"><path d={ICON[name]} /></svg>
+
 const PROJECTS = [
   { t: 'Task', d: 'Gerenciador de tarefas com cadastro e login de usuários. A conclusão das tarefas acontece via AJAX, sem recarregar a página.', tech: 'PHP, MySQL, AJAX' },
   // Preencha a descrição do Rupi Metrics (1 ou 2 frases) no campo "d"
   { t: 'Rupi Metrics', d: '', tech: '' },
 ]
-
 const STACK = [
-  ['Front-end e interface', 'HTML, CSS, JavaScript, AJAX, Bootstrap, Tailwind CSS, React, ReactBits'],
-  ['Back-end e banco de dados', 'PHP, MySQL, SQL, PDO'],
-  ['Ambiente, versionamento e deploy', 'XAMPP, Git, GitHub, Vercel'],
+  ['Front-end', 'HTML, CSS, JavaScript, AJAX, Bootstrap, Tailwind CSS, React, ReactBits'],
+  ['Back-end e dados', 'PHP, MySQL, SQL, PDO'],
+  ['Ambiente e deploy', 'XAMPP, Git, GitHub, Vercel'],
 ]
 const COURSES = [
-  ['Desenvolvimento Web, SENAC', '240 horas: Bootstrap, HTML, CSS, JavaScript, Git, GitHub, XAMPP, PHP, MySQL, SQL e PDO.'],
-  ['PHP, Cursar', 'Curso concluído.'],
-  ['Curso de 6h57min', 'Curso concluído.'],
+  ['Desenvolvimento Web, SENAC', '240 horas'],
+  ['PHP, Cursar', 'Concluído'],
+  ['Curso de 6h57min', 'Concluído'],
 ]
 const DIFS = [
-  ['Full Stack', 'Da interface ao banco de dados, em um só desenvolvedor.', 'M12 3 3 8l9 5 9-5-9-5ZM3 13l9 5 9-5'],
-  ['Organização', 'Código limpo e projetos fáceis de manter.', 'M4 6h16M4 12h10M4 18h6'],
-  ['Mobile primeiro', 'Layouts responsivos que funcionam em qualquer tela.', 'M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM11 18h2'],
-  ['Controle de versão', 'Histórico e entregas seguras com Git e GitHub.', 'M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 9c0 6-12 3-12 6'],
+  ['layers', 'Full Stack', 'Da interface ao banco de dados.'],
+  ['list', 'Organização', 'Código limpo e fácil de manter.'],
+  ['phone', 'Mobile primeiro', 'Funciona bem em qualquer tela.'],
+  ['branch', 'Git e GitHub', 'Histórico e entregas seguras.'],
 ]
-const LINKS = [['Início', '#inicio'], ['Diferenciais', '#diferenciais'], ['Stack', '#stack'], ['Projetos', '#projetos'], ['Contato', '#contato']]
+const LINKS = [['Sobre', '#sobre'], ['Diferenciais', '#diferenciais'], ['Stack', '#stack'], ['Projetos', '#projetos'], ['Contato', '#contato']]
+const SOCIAL = [['github', 'GitHub', CONTACT.github], ['chat', 'WhatsApp', CONTACT.whatsapp], ['mail', 'E-mail', 'mailto:' + CONTACT.email]]
 
 function useReveal() {
   useEffect(() => {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { threshold: .12 })
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), { threshold: .1 })
     document.querySelectorAll('.reveal').forEach(el => io.observe(el))
     return () => io.disconnect()
   }, [])
@@ -89,7 +102,7 @@ function Laptop() {
     return () => clearInterval(id)
   }, [tab])
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <div className="relative mx-auto w-full max-w-[600px]">
       <img src="/laptop.png" alt="Notebook com editor de código" className="w-full block select-none" draggable="false" />
       <div className="screen">
         <div role="tablist" className="flex bg-[#0b1620] border-b border-[#1c3345] overflow-hidden">
@@ -101,13 +114,12 @@ function Laptop() {
   )
 }
 
-const H2 = 'font-extrabold text-[length:var(--fs-h2)]'
-const SEC = 'px-6 md:px-12 py-[var(--s-24)]'
+const H2 = 'font-extrabold text-[length:var(--fs-h2)] reveal'
 
 export default function App() {
   const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light')
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState('inicio')
+  const [active, setActive] = useState('')
   const [form, setForm] = useState({ nome: '', email: '', msg: '' })
   const [status, setStatus] = useState({ kind: 'idle', text: '' })
   useReveal()
@@ -119,6 +131,7 @@ export default function App() {
   }, [])
   const toggle = () => setTheme(t => (t === 'dark' ? 'light' : 'dark'))
   const set = k => e => { setForm(f => ({ ...f, [k]: e.target.value })); if (status.kind !== 'idle') setStatus({ kind: 'idle', text: '' }) }
+  const sending = status.kind === 'loading'
 
   const send = e => {
     e.preventDefault()
@@ -131,90 +144,103 @@ export default function App() {
     }, 700)
   }
 
-  const Nav = ({ onClick }) => LINKS.map(([l, h]) => (
-    <a key={h} href={h} onClick={onClick} aria-current={active === h.slice(1)} className="side-link">{l}</a>
-  ))
-  const Theme = <button onClick={toggle} className="btn btn-ghost w-full" aria-label="Alternar tema claro ou escuro">{theme === 'dark' ? 'Modo claro' : 'Modo escuro'}</button>
-  const sending = status.kind === 'loading'
+  const ThemeBtn = <button onClick={toggle} className="icon-btn" aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}><Icon name={theme === 'dark' ? 'sun' : 'moon'} /></button>
+  const Social = ({ className = '' }) => (
+    <div className={'flex gap-3 ' + className}>
+      {SOCIAL.map(([i, l, h]) => <a key={l} href={h} target="_blank" rel="noreferrer" className="icon-btn" aria-label={l}><Icon name={i} /></a>)}
+    </div>
+  )
 
   return (
     <>
-      <aside className="hidden lg:flex fixed left-5 top-5 bottom-5 w-[264px] flex-col gap-6 panel p-5 overflow-y-auto">
-        <a href="#inicio" className="flex items-center gap-3">
-          <img src="/foto-2.png" alt="" className="w-12 h-12 rounded-full object-cover object-top" style={{ background: 'var(--surface)' }} />
-          <span><span className="brand block font-extrabold text-lg">Cauan Carvalho</span><span className="text-sm muted">Desenvolvedor Full Stack</span></span>
-        </a>
-        <nav className="flex flex-col gap-1" aria-label="Principal"><Nav /></nav>
-        <div className="mt-auto flex flex-col gap-4">
-          {Theme}
-          <div className="flex gap-4 text-sm">
-            {[['GitHub', CONTACT.github], ['WhatsApp', CONTACT.whatsapp], ['E-mail', 'mailto:' + CONTACT.email]].map(([l, h]) => <a key={l} href={h} target="_blank" rel="noreferrer" className="link">{l}</a>)}
+      <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md" style={{ background: 'color-mix(in srgb, var(--bg) 88%, transparent)' }}>
+        <div className="wrap flex items-center justify-between h-16">
+          <a href="#inicio" className="brand text-xl font-extrabold">Cauan Carvalho</a>
+          <nav className="hidden md:flex items-center gap-8" aria-label="Principal">
+            {LINKS.map(([l, h]) => <a key={h} href={h} aria-current={active === h.slice(1)} className="nav-link">{l}</a>)}
+            {ThemeBtn}
+          </nav>
+          <div className="md:hidden flex items-center gap-2">
+            {ThemeBtn}
+            <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Menu" className="icon-btn" style={{ border: 0 }}>
+              <span className="relative block w-6 h-4">
+                <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 0, transform: open ? 'rotate(45deg)' : 'none' }} />
+                <i className="absolute left-0 top-[7px] w-6 h-0.5 bg-current transition-all" style={{ opacity: open ? 0 : 1 }} />
+                <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 14, transform: open ? 'rotate(-45deg)' : 'none' }} />
+              </span>
+            </button>
           </div>
         </div>
-      </aside>
-
-      <header className="lg:hidden fixed top-0 inset-x-0 z-50 backdrop-blur-md" style={{ background: 'color-mix(in srgb, var(--bg) 88%, transparent)' }}>
-        <div className="flex items-center justify-between h-[64px] px-5">
-          <a href="#inicio" className="brand text-xl font-extrabold">Cauan Carvalho</a>
-          <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Menu" className="w-11 h-11 grid place-items-center">
-            <span className="relative block w-6 h-4">
-              <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 0, transform: open ? 'rotate(45deg)' : 'none' }} />
-              <i className="absolute left-0 top-[7px] w-6 h-0.5 bg-current transition-all" style={{ opacity: open ? 0 : 1 }} />
-              <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 14, transform: open ? 'rotate(-45deg)' : 'none' }} />
-            </span>
-          </button>
-        </div>
-        <div className="overflow-hidden transition-all duration-500" style={{ maxHeight: open ? 460 : 0 }}>
-          <nav className="flex flex-col gap-1 px-5 pb-5" aria-label="Mobile"><Nav onClick={() => setOpen(false)} />{Theme}</nav>
+        <div className="md:hidden overflow-hidden transition-all duration-500" style={{ maxHeight: open ? 360 : 0 }}>
+          <nav className="wrap flex flex-col pb-5" aria-label="Mobile">
+            {LINKS.map(([l, h]) => <a key={h} href={h} onClick={() => setOpen(false)} aria-current={active === h.slice(1)} className="nav-link py-3 text-lg">{l}</a>)}
+          </nav>
         </div>
       </header>
 
-      <main className="lg:ml-[304px] px-5 lg:px-0 lg:pr-5 pt-[84px] lg:pt-5 pb-5">
-        <div className="panel overflow-hidden">
-          <section id="inicio" className="px-6 md:px-12 pt-[var(--s-16)] pb-[var(--s-24)]">
-            <div className="grid xl:grid-cols-[1fr_1.15fr] gap-12 items-center">
-              <div>
-                <h1 className="font-extrabold text-[length:var(--fs-h1)]">Desenvolvedor Full Stack com PHP, MySQL e React</h1>
-                <p className="mt-6 max-w-md text-[length:var(--fs-lg)] muted">Sistemas web com banco de dados, painel e interface responsiva.</p>
-                <div className="mt-8 flex flex-wrap items-center gap-6">
-                  <a href="#contato" className="btn btn-primary">Falar comigo</a>
-                  <a href="#projetos" className="link font-semibold">Ver projetos</a>
-                </div>
+      <main>
+        <section id="inicio" className="pt-[calc(4rem+var(--s-10))] pb-[var(--sec-y)]">
+          <div className="wrap grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
+            <div>
+              <h1 className="font-extrabold text-[length:var(--fs-name)]">Cauan Carvalho</h1>
+              <p className="brand mt-4 text-[length:var(--fs-lg)] font-bold sm:text-2xl">Desenvolvedor Full Stack com PHP, MySQL e React</p>
+              <p className="mt-4 max-w-md muted">Sistemas web com banco de dados e interface responsiva.</p>
+              <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+                <a href="#contato" className="btn btn-primary">Falar comigo</a>
+                <a href="#projetos" className="link font-semibold text-center sm:text-left">Ver projetos</a>
               </div>
-              <Laptop />
+              <Social className="mt-8" />
             </div>
-          </section>
+            <Laptop />
+          </div>
+        </section>
 
-          <section id="diferenciais" className={SEC}>
-            <h2 className={'reveal ' + H2}>Como eu trabalho</h2>
-            <div className="mt-12 grid sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-10">
-              {DIFS.map(([t, d, p]) => (
-                <div key={t} className="reveal">
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true"><path d={p} /></svg>
-                  <h3 className="text-xl font-bold mt-4">{t}</h3>
-                  <p className="mt-2 text-[length:var(--fs-sm)] muted">{d}</p>
+        <section id="sobre" className="band sec">
+          <div className="wrap grid md:grid-cols-[minmax(0,360px)_1fr] gap-10 md:gap-16 items-center">
+            <img src="/foto-1.png" alt="Cauan Carvalho" className="reveal w-full max-w-[360px] aspect-[4/5] object-cover object-top rounded-[var(--r-card)]" style={{ background: 'var(--surface)' }} loading="lazy" />
+            <div>
+              <h2 className={H2}>Sobre</h2>
+              <p className="reveal mt-6 text-[length:var(--fs-lg)] max-w-xl">Desenvolvo sistemas web completos, do banco de dados à interface, com PHP, MySQL, JavaScript e React.</p>
+              <p className="reveal mt-4 max-w-xl muted">Formado no curso de Desenvolvimento Web do SENAC, com 240 horas de estudo.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="diferenciais" className="sec">
+          <div className="wrap">
+            <h2 className={H2}>Como eu trabalho</h2>
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+              {DIFS.map(([i, t, d]) => (
+                <div key={t} className="reveal flex gap-4 lg:block">
+                  <Icon name={i} />
+                  <div className="lg:mt-4"><h3 className="text-xl font-bold">{t}</h3><p className="mt-1 text-[length:var(--fs-sm)] muted">{d}</p></div>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section id="stack" className={SEC}>
-            <h2 className={'reveal ' + H2}>Stack e formação</h2>
-            <div className="mt-12 grid xl:grid-cols-2 gap-x-16 gap-y-12">
-              <div className="space-y-8">
-                {STACK.map(([t, items]) => (
-                  <div key={t} className="reveal"><h3 className="text-xl font-bold">{t}</h3><p className="mt-2 muted">{items}</p></div>
-                ))}
-              </div>
-              <div className="space-y-8">
-                {COURSES.map(([t, d]) => <div key={t} className="reveal"><h3 className="text-xl font-bold">{t}</h3><p className="mt-2 muted">{d}</p></div>)}
+        <section id="stack" className="band sec">
+          <div className="wrap grid lg:grid-cols-2 gap-12 lg:gap-20">
+            <div>
+              <h2 className={H2}>Stack</h2>
+              <div className="mt-10 space-y-8">
+                {STACK.map(([t, items]) => <div key={t} className="reveal"><h3 className="text-lg font-bold">{t}</h3><p className="mt-2 muted">{items}</p></div>)}
               </div>
             </div>
-          </section>
+            <div>
+              <h2 className={H2}>Formação</h2>
+              <ul className="mt-10 space-y-6 list-none p-0 m-0">
+                {COURSES.map(([t, d]) => <li key={t} className="reveal"><h3 className="text-lg font-bold">{t}</h3><p className="mt-1 muted">{d}</p></li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
 
-          <section id="projetos" className={SEC}>
-            <h2 className={'reveal ' + H2}>Projetos</h2>
-            <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <section id="projetos" className="sec">
+          <div className="wrap">
+            <h2 className={H2}>Projetos</h2>
+            <div className="mt-10 grid md:grid-cols-2 gap-6">
               {PROJECTS.map(p => (
                 <article key={p.t} className="reveal card">
                   <h3 className="text-2xl font-bold">{p.t}</h3>
@@ -223,36 +249,40 @@ export default function App() {
                 </article>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section id="contato" className={SEC}>
-            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16">
-              <div className="reveal">
-                <img src="/foto-2.png" alt="Cauan Carvalho" className="w-36 h-36 rounded-full object-cover object-top" style={{ background: 'var(--surface)' }} loading="lazy" />
-                <h2 className={'mt-8 ' + H2}>Vamos conversar sobre o seu projeto</h2>
-                <ul className="mt-8 space-y-2 list-none p-0 m-0">
-                  <li><a className="link" href={'mailto:' + CONTACT.email}>{CONTACT.email}</a></li>
-                  <li><a className="link" href={CONTACT.whatsapp} target="_blank" rel="noreferrer">WhatsApp: (99) 98150-2997</a></li>
-                  <li><a className="link" href={CONTACT.github} target="_blank" rel="noreferrer">github.com/Cauancarvalh0</a></li>
-                </ul>
-              </div>
-              <form onSubmit={send} className="reveal flex flex-col gap-4">
-                <input className="field" required placeholder="Seu nome" value={form.nome} onChange={set('nome')} aria-label="Seu nome" disabled={sending} />
-                <input className="field" required type="email" placeholder="Seu e-mail" value={form.email} onChange={set('email')} aria-label="Seu e-mail" disabled={sending} />
-                <textarea className="field" required rows={5} placeholder="Sua mensagem" value={form.msg} onChange={set('msg')} aria-label="Sua mensagem" disabled={sending} />
-                <div className="flex flex-wrap items-center gap-5">
-                  <button type="submit" className="btn btn-primary" disabled={sending}>{sending ? <><span className="spin" aria-hidden="true" />Enviando</> : 'Enviar mensagem'}</button>
-                  <p role="status" aria-live="polite" key={status.kind + status.text} className={status.kind === 'idle' ? '' : 'status'} data-kind={status.kind}>{status.text}</p>
-                </div>
-              </form>
+        <section id="contato" className="band sec">
+          <div className="wrap grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20">
+            <div>
+              <h2 className={H2}>Vamos conversar sobre o seu projeto</h2>
+              <ul className="reveal mt-8 space-y-3 list-none p-0 m-0 break-words">
+                <li><a className="link" href={'mailto:' + CONTACT.email}>{CONTACT.email}</a></li>
+                <li><a className="link" href={CONTACT.whatsapp} target="_blank" rel="noreferrer">WhatsApp: (99) 98150-2997</a></li>
+              </ul>
             </div>
-          </section>
-        </div>
-        <footer className="py-8 px-3 flex flex-wrap justify-between gap-3 text-sm muted">
-          <span className="brand font-bold" style={{ color: 'var(--fg)' }}>Cauan Carvalho</span>
-          <span>© {new Date().getFullYear()} Todos os direitos reservados.</span>
-        </footer>
+            <form onSubmit={send} className="reveal flex flex-col gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input className="field" required placeholder="Seu nome" value={form.nome} onChange={set('nome')} aria-label="Seu nome" autoComplete="name" disabled={sending} />
+                <input className="field" required type="email" placeholder="Seu e-mail" value={form.email} onChange={set('email')} aria-label="Seu e-mail" autoComplete="email" disabled={sending} />
+              </div>
+              <textarea className="field" required rows={5} placeholder="Sua mensagem" value={form.msg} onChange={set('msg')} aria-label="Sua mensagem" disabled={sending} />
+              <button type="submit" className="btn btn-primary w-full sm:w-auto sm:self-start" disabled={sending}>{sending ? <><span className="spin" aria-hidden="true" />Enviando</> : 'Enviar mensagem'}</button>
+              <p role="status" aria-live="polite" key={status.kind + status.text} className={status.kind === 'idle' ? '' : 'status'} data-kind={status.kind}>{status.text}</p>
+            </form>
+          </div>
+        </section>
       </main>
+
+      <footer className="py-12">
+        <div className="wrap flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <p className="brand text-lg font-bold">Cauan Carvalho</p>
+            <p className="mt-1 text-sm muted">© {new Date().getFullYear()} Todos os direitos reservados.</p>
+          </div>
+          <Social />
+        </div>
+      </footer>
     </>
   )
 }
