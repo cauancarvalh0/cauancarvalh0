@@ -1,37 +1,86 @@
 @import "tailwindcss";
-:root{--ice:#C9DFEA;--ink:#082E43;--verm:#FF4F31;--bg:#C9DFEA;--fg:#082E43;--panel:#D8E8F1;--surface:#E6F0F6;--line:rgba(8,46,67,.16);--muted:rgba(8,46,67,.74)}
-[data-theme=dark]{--bg:#051d2b;--fg:#C9DFEA;--panel:#082E43;--surface:#0d3a52;--line:rgba(201,223,234,.16);--muted:rgba(201,223,234,.76)}
+
+/* ───────── Design system ───────── */
+:root{
+  /* marca */
+  --ice:#C9DFEA; --ink:#082E43; --verm:#FF4F31;
+  /* tema claro */
+  --bg:#C9DFEA; --panel:#D8E8F1; --surface:#E8F1F7;
+  --fg:#082E43; --muted:#2E5266; --line:rgba(8,46,67,.22);
+  --accent:var(--verm); --on-accent:var(--ink);
+  /* tipografia */
+  --font-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-sm:.9375rem; --fs-md:1.0625rem; --fs-lg:1.25rem;
+  --fs-h2:clamp(1.9rem,4vw,2.8rem); --fs-h1:clamp(2.4rem,5.6vw,4.2rem);
+  /* espaçamento */
+  --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.25rem; --s-6:1.5rem;
+  --s-8:2rem; --s-12:3rem; --s-16:4rem; --s-24:6rem;
+  /* raios: interno = externo − espaçamento */
+  --r-panel:28px;
+  --r-in-panel:calc(var(--r-panel) - var(--s-5));   /* itens dentro da sidebar */
+  --r-card:20px;
+  --r-in-card:calc(var(--r-card) - var(--s-3));     /* campos/botões dentro de cards */
+  /* ícones */
+  --icon-size:28px; --icon-stroke:1.75;
+}
+[data-theme=dark]{
+  --bg:#051d2b; --panel:#082E43; --surface:#0d3a52;
+  --fg:#C9DFEA; --muted:#A9C4D3; --line:rgba(201,223,234,.24);
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;transition:background .4s,color .4s}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-md);line-height:1.6;font-variant-numeric:tabular-nums;transition:background .4s,color .4s}
 a{color:inherit;text-decoration:none}
-h1,h2,h3,.brand{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.03em;line-height:1.05;margin:0}
-.dot{color:var(--verm)}
+h1,h2,h3,.brand{font-family:var(--font-display);letter-spacing:-.03em;line-height:1.05;margin:0;text-wrap:balance}
+h1,h2{margin-left:-.04em} /* alinhamento óptico: compensa o recuo lateral das letras grandes */
+p{margin:0;text-wrap:pretty}
 .muted{color:var(--muted)}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:28px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;transition:transform .3s,border-color .3s}
-.card:hover{transform:translateY(-4px);border-color:var(--verm)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;border:1.5px solid var(--fg);transition:transform .2s,background .2s,color .2s;cursor:pointer;font-family:inherit;font-size:1rem;background:none;color:var(--fg)}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--verm);border-color:var(--verm);color:#fff}
+.panel{background:var(--panel);border-radius:var(--r-panel)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:var(--s-6)}
+.icon{width:var(--icon-size);height:var(--icon-size);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);padding:var(--s-3) var(--s-6);border-radius:999px;font:600 var(--fs-md) var(--font-body);border:1.5px solid var(--fg);background:none;color:var(--fg);cursor:pointer;transition:background .2s,color .2s,opacity .2s}
 .btn-ghost:hover{background:var(--fg);color:var(--bg)}
-:focus-visible{outline:3px solid var(--verm);outline-offset:3px}
-.side-link{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;font-weight:500;transition:background .2s}
-.side-link:hover,.side-link.on{background:var(--surface)}
-.side-link.on{box-shadow:inset 3px 0 0 var(--verm)}
-.ico{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--verm);color:#fff;font-weight:700;font-size:15px}
-.chip{padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--surface)}
-.field{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit}
+/* única cor de destaque do site: só no CTA principal */
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700;font-size:1.2rem;padding:var(--s-4) var(--s-8)}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn[disabled]{opacity:.7;cursor:progress}
+.link{text-decoration:underline;text-underline-offset:4px}
+:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+
+.side-link{display:block;padding:var(--s-3) var(--s-4);border-radius:var(--r-in-panel);font-weight:500;transition:background .2s}
+.side-link:hover{background:var(--surface)}
+.side-link[aria-current=true]{background:var(--surface);font-weight:700}
+
+.field{width:100%;padding:var(--s-4);border-radius:var(--r-in-card);border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit}
 .field::placeholder{color:var(--muted)}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
-.screen{position:absolute;left:16.6%;top:14.65%;width:66.9%;height:62%;background:#0b1620;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;font-family:ui-monospace,Menlo,Consolas,monospace;color:#d6e6f0}
-.screen pre{margin:0;padding:3% 3%;font-size:clamp(6px,1.2vw,13px);line-height:1.55;white-space:pre-wrap;word-break:break-word;flex:1;overflow:hidden;text-align:left}
-.tab{padding:.5em .9em;font-size:clamp(6px,1.1vw,12px);color:#8fb0c2;border:0;border-bottom:2px solid transparent;cursor:pointer;background:none;font-family:inherit;white-space:nowrap}
-.tab[aria-selected=true]{color:#fff;border-bottom-color:var(--verm);background:#102433}
-.caret{display:inline-block;width:.55em;height:1.1em;background:var(--verm);vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+
+/* tela do notebook: único lugar com fonte mono */
+.screen{position:absolute;left:16.6%;top:14.65%;width:66.9%;height:62%;background:#0b1620;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;font-family:var(--font-mono);color:#d6e6f0}
+.screen pre{margin:0;padding:3%;font-size:clamp(6px,1.2vw,13px);line-height:1.55;white-space:pre-wrap;word-break:break-word;flex:1;overflow:hidden;text-align:left}
+.tab{padding:.5em .9em;font-size:clamp(6px,1.1vw,12px);color:#9ebccd;border:0;border-bottom:2px solid transparent;cursor:pointer;background:none;font-family:inherit;white-space:nowrap}
+.tab[aria-selected=true]{color:#fff;border-bottom-color:#C9DFEA;background:#102433}
+.caret{display:inline-block;width:.55em;height:1.1em;background:#C9DFEA;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.modal-bg{position:fixed;inset:0;background:rgba(5,29,43,.75);display:grid;place-items:center;padding:20px;z-index:80;animation:fade .25s}
-.modal{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:24px;max-width:560px;width:100%;padding:28px;animation:pop .3s cubic-bezier(.2,.7,.2,1)}
-@keyframes fade{from{opacity:0}}@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* feedback de formulário */
+.status{display:flex;align-items:center;gap:var(--s-3);font-weight:600;animation:status-in .25s ease}
+.status[data-kind=ok]{animation-name:status-in}
+.status[data-kind=err]{animation-name:shake .3s}
+@keyframes status-in{from{opacity:0;transform:translateY(6px)}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.spin{width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+  .caret{animation:none}
+}
