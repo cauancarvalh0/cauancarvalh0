@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Preencha seus contatos reais aqui
-const CONTACT = { whatsapp: '', email: '', github: '' }
-
+const CONTACT = { whatsapp: 'https://wa.me/5599981502997', email: 'Cauancarvalho004@gmail.com', github: 'https://github.com/cauancarvalh0' }
 const CODE = {
   'PHP + SQL + PDO': `<?php
 // config/database.php
