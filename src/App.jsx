@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Preencha seus contatos reais aqui
-const CONTACT = { whatsapp: 'https://wa.me/5599981502997', email: 'Cauancarvalho004@gmail.com', github: 'https://github.com/cauancarvalh0' }
+const CONTACT = { whatsapp: 'https://wa.me/5599981502997', email: 'Cauancarvalho004@gmail.com', github: 'https://github.com/Cauancarvalh0' }
+
 const CODE = {
   'PHP + SQL + PDO': `<?php
 // config/database.php
@@ -70,7 +71,9 @@ const DIFS = [
   ['Mobile primeiro', 'Layouts responsivos que funcionam bem em qualquer tela.'],
   ['Controle de versão', 'Histórico e entregas seguras com Git e GitHub.'],
 ]
-const LINKS = [['Diferenciais', '#diferenciais'], ['Stack', '#stack'], ['Projetos', '#projetos'], ['Contato', '#contato']]
+const LINKS = [['Início', '#inicio'], ['Diferenciais', '#diferenciais'], ['Stack', '#stack'], ['Projetos', '#projetos'], ['Contato', '#contato']]
+const STATS = [['6', 'Projetos reais'], ['240h', 'Curso SENAC'], ['3', 'Cursos concluídos'], ['3', 'Frentes: front, back e deploy']]
+const GLY = ['</>', '{ }', '▦', 'Git']
 
 function useReveal() {
   useEffect(() => {
@@ -91,10 +94,10 @@ function Laptop() {
     return () => clearInterval(id)
   }, [tab])
   return (
-    <div className="relative mx-auto w-full max-w-[720px]">
+    <div className="relative mx-auto w-full max-w-[640px]">
       <img src="/laptop.png" alt="Notebook com editor de código" className="w-full block select-none" draggable="false" />
       <div className="screen">
-        <div role="tablist" className="flex bg-[#0b1620] border-b border-[#1c3345]">
+        <div role="tablist" className="flex bg-[#0b1620] border-b border-[#1c3345] overflow-hidden">
           {names.map(nm => <button key={nm} role="tab" aria-selected={tab === nm} className="tab" onClick={() => setTab(nm)}>{nm}</button>)}
         </div>
         <pre aria-label={`Código ${tab}`}>{CODE[tab].slice(0, n)}<span className="caret" /></pre>
@@ -103,130 +106,166 @@ function Laptop() {
   )
 }
 
+const H2 = 'text-[clamp(2rem,4.5vw,3.2rem)] font-extrabold'
+
 export default function App() {
   const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light')
   const [open, setOpen] = useState(false)
   const [proj, setProj] = useState(null)
+  const [active, setActive] = useState('inicio')
+  const [form, setForm] = useState({ nome: '', email: '', msg: '' })
   const closeRef = useRef(null)
   useReveal()
   useEffect(() => { document.documentElement.dataset.theme = theme; try { localStorage.setItem('theme', theme) } catch {} }, [theme])
   useEffect(() => { const k = e => e.key === 'Escape' && setProj(null); window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k) }, [])
   useEffect(() => { if (proj) closeRef.current?.focus() }, [proj])
+  useEffect(() => {
+    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && setActive(e.target.id)), { rootMargin: '-40% 0px -55% 0px' })
+    LINKS.forEach(([, h]) => { const el = document.querySelector(h); el && io.observe(el) })
+    return () => io.disconnect()
+  }, [])
   const toggle = () => setTheme(t => (t === 'dark' ? 'light' : 'dark'))
-  const contactLinks = [['WhatsApp', CONTACT.whatsapp], ['E-mail', CONTACT.email && 'mailto:' + CONTACT.email], ['GitHub', CONTACT.github]].filter(l => l[1])
+  const send = e => {
+    e.preventDefault()
+    const body = `Olá, sou ${form.nome} (${form.email}).\n\n${form.msg}`
+    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent('Contato pelo portfólio')}&body=${encodeURIComponent(body)}`
+  }
+  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const Nav = ({ onClick }) => LINKS.map(([l, h]) => (
+    <a key={h} href={h} onClick={onClick} className={'side-link' + (active === h.slice(1) ? ' on' : '')}>{l}</a>
+  ))
+  const Theme = <button onClick={toggle} className="btn btn-ghost w-full" aria-label="Alternar tema claro/escuro">{theme === 'dark' ? 'Modo claro' : 'Modo escuro'}</button>
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md" style={{ background: 'color-mix(in srgb, var(--bg) 82%, transparent)', borderBottom: '1px solid var(--line)' }}>
-        <div className="wrap flex items-center justify-between h-[68px]">
-          <a href="#inicio" className="brand text-xl font-extrabold">Cauan Carvalho<span className="dot">.</span></a>
-          <nav className="hidden md:flex items-center gap-8" aria-label="Principal">
-            {LINKS.map(([l, h]) => <a key={h} href={h} className="nav-link">{l}</a>)}
-            <button onClick={toggle} className="btn btn-ghost !py-2 !px-4 text-sm" aria-label="Alternar tema claro/escuro">{theme === 'dark' ? 'Modo claro' : 'Modo escuro'}</button>
-          </nav>
-          <div className="md:hidden flex items-center gap-2">
-            <button onClick={toggle} className="btn btn-ghost !py-2 !px-3 text-sm" aria-label="Alternar tema">{theme === 'dark' ? '☀' : '☾'}</button>
-            <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Menu" className="w-11 h-11 grid place-items-center">
-              <span className="relative block w-6 h-4">
-                <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 0, transform: open ? 'rotate(45deg)' : 'none' }} />
-                <i className="absolute left-0 top-[7px] w-6 h-0.5 bg-current transition-all" style={{ opacity: open ? 0 : 1 }} />
-                <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 14, transform: open ? 'rotate(-45deg)' : 'none' }} />
-              </span>
-            </button>
-          </div>
+      {/* Sidebar desktop */}
+      <aside className="hidden lg:flex fixed left-5 top-5 bottom-5 w-[264px] flex-col gap-5 panel p-5 overflow-y-auto">
+        <a href="#inicio" className="flex items-center gap-3">
+          <img src="/foto-2.png" alt="" className="w-12 h-12 rounded-full object-cover object-top" style={{ background: 'var(--surface)' }} />
+          <span><span className="brand block font-extrabold text-lg">Cauan Carvalho<span className="dot">.</span></span><span className="text-sm muted">Desenvolvedor Full Stack</span></span>
+        </a>
+        <nav className="flex flex-col gap-1" aria-label="Principal"><Nav /></nav>
+        <div className="rounded-2xl p-5 mt-auto" style={{ background: 'linear-gradient(145deg,var(--ink),#0d4a6b)', color: '#C9DFEA' }}>
+          <p className="brand font-bold text-lg">Vamos construir algo juntos?</p>
+          <a href="#contato" className="btn btn-primary w-full mt-4">Falar comigo</a>
         </div>
-        <div className="md:hidden overflow-hidden transition-all duration-500" style={{ maxHeight: open ? 320 : 0 }}>
-          <nav className="wrap flex flex-col py-4 gap-1" aria-label="Mobile">
-            {LINKS.map(([l, h]) => <a key={h} href={h} onClick={() => setOpen(false)} className="py-3 text-lg font-medium" style={{ borderBottom: '1px solid var(--line)' }}>{l}</a>)}
-          </nav>
+        {Theme}
+        <div className="flex gap-2 flex-wrap">
+          {[['GitHub', CONTACT.github], ['WhatsApp', CONTACT.whatsapp], ['E-mail', 'mailto:' + CONTACT.email]].map(([l, h]) => <a key={l} href={h} target="_blank" rel="noreferrer" className="chip">{l}</a>)}
+        </div>
+      </aside>
+
+      {/* Header mobile */}
+      <header className="lg:hidden fixed top-0 inset-x-0 z-50 backdrop-blur-md" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', borderBottom: '1px solid var(--line)' }}>
+        <div className="flex items-center justify-between h-[64px] px-5">
+          <a href="#inicio" className="brand text-xl font-extrabold">Cauan Carvalho<span className="dot">.</span></a>
+          <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Menu" className="w-11 h-11 grid place-items-center">
+            <span className="relative block w-6 h-4">
+              <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 0, transform: open ? 'rotate(45deg)' : 'none' }} />
+              <i className="absolute left-0 top-[7px] w-6 h-0.5 bg-current transition-all" style={{ opacity: open ? 0 : 1 }} />
+              <i className="absolute left-0 w-6 h-0.5 bg-current transition-all" style={{ top: open ? 7 : 14, transform: open ? 'rotate(-45deg)' : 'none' }} />
+            </span>
+          </button>
+        </div>
+        <div className="overflow-hidden transition-all duration-500" style={{ maxHeight: open ? 460 : 0 }}>
+          <nav className="flex flex-col gap-1 px-5 pb-5" aria-label="Mobile"><Nav onClick={() => setOpen(false)} />{Theme}</nav>
         </div>
       </header>
 
-      <main>
-        <section id="inicio" className="!pt-36 !pb-24">
-          <div className="wrap grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
-            <div>
-              <p className="mb-5 font-medium" style={{ color: 'var(--muted)' }}>Cauan Carvalho · Desenvolvedor Full Stack</p>
-              <h1 className="text-[clamp(2.8rem,8vw,5.6rem)] font-extrabold">Sistemas web que<br />funcionam e<br />convencem<span className="dot">.</span></h1>
-              <p className="mt-6 max-w-md text-lg" style={{ color: 'var(--muted)' }}>Do banco de dados à interface, com PHP, MySQL, JavaScript e React.</p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <a href="#projetos" className="btn btn-primary">Ver projetos</a>
-                <a href="#contato" className="btn btn-ghost">Falar comigo</a>
+      <main className="lg:ml-[304px] px-5 lg:px-0 lg:pr-5 pt-[84px] lg:pt-5 pb-5">
+        <div className="panel overflow-hidden">
+          <section id="inicio" className="px-6 md:px-12 pt-14 pb-20">
+            <div className="grid xl:grid-cols-[1fr_1.15fr] gap-12 items-center">
+              <div>
+                <p className="mb-4 font-medium muted">Olá, eu sou Cauan Carvalho</p>
+                <h1 className="text-[clamp(2.6rem,6.5vw,4.8rem)] font-extrabold">Sistemas web que funcionam e convencem<span className="dot">.</span></h1>
+                <p className="mt-6 max-w-md text-lg muted">Do banco de dados à interface, com PHP, MySQL, JavaScript e React.</p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a href="#projetos" className="btn btn-primary">Ver projetos</a>
+                  <a href="#contato" className="btn btn-ghost">Falar comigo</a>
+                </div>
               </div>
+              <Laptop />
             </div>
-            <Laptop />
-          </div>
-        </section>
+          </section>
 
-        <section id="diferenciais">
-          <div className="wrap">
-            <h2 className="reveal text-[clamp(2rem,5vw,3.4rem)] font-extrabold max-w-xl">Como eu trabalho<span className="dot">.</span></h2>
-            <div className="mt-14 grid sm:grid-cols-2 gap-6">
-              {DIFS.map(([t, d]) => (
-                <div key={t} className="reveal card p-8"><h3 className="text-2xl font-bold">{t}</h3><p className="mt-3" style={{ color: 'var(--muted)' }}>{d}</p></div>
+          <section id="diferenciais" className="px-6 md:px-12 py-16" style={{ borderTop: '1px solid var(--line)' }}>
+            <h2 className={'reveal ' + H2}>Como eu trabalho<span className="dot">.</span></h2>
+            <div className="mt-10 grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
+              {DIFS.map(([t, d], i) => (
+                <div key={t} className="reveal card p-6 text-center">
+                  <div className="ico mx-auto">{GLY[i]}</div>
+                  <h3 className="text-xl font-bold mt-5">{t}</h3>
+                  <p className="mt-2 text-[15px] muted">{d}</p>
+                </div>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section id="stack">
-          <div className="wrap">
-            <h2 className="reveal text-[clamp(2rem,5vw,3.4rem)] font-extrabold">Stack e formação<span className="dot">.</span></h2>
-            <div className="mt-14 grid lg:grid-cols-2 gap-12">
-              <div className="space-y-10">
+          <section id="stack" className="px-6 md:px-12 py-16" style={{ borderTop: '1px solid var(--line)' }}>
+            <h2 className={'reveal ' + H2}>Stack e formação<span className="dot">.</span></h2>
+            <div className="mt-10 grid xl:grid-cols-2 gap-10">
+              <div className="space-y-8">
                 {STACK.map(([t, items]) => (
                   <div key={t} className="reveal">
-                    <h3 className="text-xl font-bold mb-4">{t}</h3>
-                    <div className="flex flex-wrap gap-2">{items.split(', ').map(i => <span key={i} className="px-4 py-2 rounded-full text-sm font-medium" style={{ border: '1px solid var(--line)', background: 'var(--surface)' }}>{i}</span>)}</div>
+                    <h3 className="text-xl font-bold mb-3">{t}</h3>
+                    <div className="flex flex-wrap gap-2">{items.split(', ').map(i => <span key={i} className="chip">{i}</span>)}</div>
                   </div>
                 ))}
               </div>
-              <div className="space-y-5">
-                {COURSES.map(([t, d]) => <div key={t} className="reveal card p-7"><h3 className="text-xl font-bold">{t}</h3><p className="mt-2" style={{ color: 'var(--muted)' }}>{d}</p></div>)}
+              <div className="space-y-4">
+                {COURSES.map(([t, d]) => <div key={t} className="reveal card p-6"><h3 className="text-xl font-bold">{t}</h3><p className="mt-2 muted">{d}</p></div>)}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section id="projetos">
-          <div className="wrap">
-            <h2 className="reveal text-[clamp(2rem,5vw,3.4rem)] font-extrabold">Projetos reais<span className="dot">.</span></h2>
-            <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section id="projetos" className="px-6 md:px-12 py-16" style={{ borderTop: '1px solid var(--line)' }}>
+            <h2 className={'reveal ' + H2}>Projetos reais<span className="dot">.</span></h2>
+            <div className="mt-10 grid sm:grid-cols-2 2xl:grid-cols-3 gap-5">
               {PROJECTS.map(p => (
-                <button key={p.t} onClick={() => setProj(p)} className="reveal card overflow-hidden text-left cursor-pointer flex flex-col" style={{ color: 'inherit' }}>
+                <button key={p.t} onClick={() => setProj(p)} className="reveal card overflow-hidden text-left cursor-pointer flex flex-col" style={{ color: 'inherit', font: 'inherit' }}>
                   <div className="h-36 w-full" style={{ background: `linear-gradient(135deg, ${p.g[0]}, ${p.g[1]})` }} />
-                  <div className="p-6">
+                  <div className="p-5">
                     <p className="text-sm font-medium" style={{ color: 'var(--verm)' }}>{p.tag}</p>
                     <h3 className="text-xl font-bold mt-1">{p.t}</h3>
-                    <p className="mt-3 text-[15px] line-clamp-3" style={{ color: 'var(--muted)' }}>{p.d}</p>
+                    <p className="mt-2 text-[15px] muted line-clamp-3">{p.d}</p>
                   </div>
                 </button>
               ))}
             </div>
-          </div>
-        </section>
 
-        <section id="contato">
-          <div className="wrap grid md:grid-cols-[320px_1fr] gap-12 items-center">
-            <img src="/foto-2.png" alt="Cauan Carvalho" className="reveal w-full max-w-[320px] mx-auto rounded-3xl" style={{ background: 'var(--surface)' }} loading="lazy" />
-            <div className="reveal">
-              <h2 className="text-[clamp(2.2rem,6vw,4rem)] font-extrabold">Vamos construir o seu projeto<span className="dot">?</span></h2>
-              <p className="mt-5 text-lg max-w-md" style={{ color: 'var(--muted)' }}>Conte o que você precisa e eu respondo com um caminho claro.</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {contactLinks.map(([l, h], i) => <a key={l} href={h} target="_blank" rel="noreferrer" className={'btn ' + (i === 0 ? 'btn-primary' : 'btn-ghost')}>{l}</a>)}
-                {!contactLinks.length && <a href="#inicio" className="btn btn-primary">Voltar ao topo</a>}
-              </div>
+            <div className="reveal mt-10 rounded-3xl grid grid-cols-2 lg:grid-cols-4 gap-6 p-8" style={{ background: 'linear-gradient(120deg,var(--ink),#0d4a6b 60%,var(--verm))', color: '#C9DFEA' }}>
+              {STATS.map(([n, l]) => <div key={l}><p className="brand text-4xl font-extrabold text-white">{n}</p><p className="text-sm mt-1">{l}</p></div>)}
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
 
-      <footer style={{ borderTop: '1px solid var(--line)' }}>
-        <div className="wrap py-10 flex flex-wrap justify-between gap-3 text-sm" style={{ color: 'var(--muted)' }}>
+          <section id="contato" className="px-6 md:px-12 py-16" style={{ borderTop: '1px solid var(--line)' }}>
+            <div className="reveal grid lg:grid-cols-[1fr_1.1fr] gap-10">
+              <div>
+                <img src="/foto-2.png" alt="Cauan Carvalho" className="w-40 h-40 rounded-full object-cover object-top" style={{ background: 'var(--surface)' }} loading="lazy" />
+                <h2 className={'mt-6 ' + H2}>Vamos trabalhar juntos<span className="dot">?</span></h2>
+                <p className="mt-4 text-lg muted max-w-md">Conte o que você precisa e eu respondo com um caminho claro.</p>
+                <ul className="mt-6 space-y-2 list-none p-0">
+                  <li><a className="underline" href={'mailto:' + CONTACT.email}>{CONTACT.email}</a></li>
+                  <li><a className="underline" href={CONTACT.whatsapp} target="_blank" rel="noreferrer">WhatsApp: (99) 98150-2997</a></li>
+                  <li><a className="underline" href={CONTACT.github} target="_blank" rel="noreferrer">github.com/Cauancarvalh0</a></li>
+                </ul>
+              </div>
+              <form onSubmit={send} className="card p-6 flex flex-col gap-4">
+                <input className="field" required placeholder="Seu nome" value={form.nome} onChange={set('nome')} aria-label="Seu nome" />
+                <input className="field" required type="email" placeholder="Seu e-mail" value={form.email} onChange={set('email')} aria-label="Seu e-mail" />
+                <textarea className="field" required rows={5} placeholder="Sua mensagem" value={form.msg} onChange={set('msg')} aria-label="Sua mensagem" />
+                <button type="submit" className="btn btn-primary">Enviar mensagem</button>
+              </form>
+            </div>
+          </section>
+        </div>
+        <footer className="py-8 px-3 flex flex-wrap justify-between gap-3 text-sm muted">
           <span className="brand font-bold" style={{ color: 'var(--fg)' }}>Cauan Carvalho<span className="dot">.</span></span>
           <span>© {new Date().getFullYear()} Todos os direitos reservados.</span>
-        </div>
-      </footer>
+        </footer>
+      </main>
 
       {proj && (
         <div className="modal-bg" onClick={() => setProj(null)}>
@@ -234,7 +273,7 @@ export default function App() {
             <div className="h-28 rounded-2xl mb-6" style={{ background: `linear-gradient(135deg, ${proj.g[0]}, ${proj.g[1]})` }} />
             <p className="text-sm font-medium" style={{ color: 'var(--verm)' }}>{proj.tag}</p>
             <h3 className="text-3xl font-extrabold mt-1">{proj.t}</h3>
-            <p className="mt-4 text-lg" style={{ color: 'var(--muted)' }}>{proj.d}</p>
+            <p className="mt-4 text-lg muted">{proj.d}</p>
             <div className="mt-8 flex gap-3 flex-wrap">
               {proj.url && <a href={proj.url} target="_blank" rel="noreferrer" className="btn btn-primary">Abrir projeto</a>}
               <button ref={closeRef} onClick={() => setProj(null)} className="btn btn-ghost">Fechar</button>
